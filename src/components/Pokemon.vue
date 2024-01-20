@@ -1,7 +1,7 @@
 <template>
     <div @click="input?.focus()" class="h-[182px]">
         <div class="flex flex-row justify-center items-center">
-            <img class="h-[150px]" :src="imageURL">
+            <img :class="{'correct': answerIsCorrect}" class="h-[150px]" :src="imageURL">
             <span @click="sayName" class="volume-icon"><i class="fas fa-volume-up"></i></span>
         </div>
         <div class="text-2xl h-[32px]">
@@ -50,12 +50,12 @@ const printedAnswer = computed<AnswerCharacter[]>(() => {
     })
 });
 
+const answerIsCorrect = computed(() => {
+    return printedAnswer.value.length === name.length && printedAnswer.value.reduce((agg, curr) => agg && curr.isCorrect, true);
+})  
+
 watchEffect(() => {
-    if (printedAnswer.value.length === name.length && printedAnswer.value.reduce((agg, curr) => agg && curr.isCorrect, true)) {
-        emit('done', true);
-    } else {
-        emit('done', false);
-    }
+    emit('done', answerIsCorrect.value);
 })
 
 const sayName = () => {
@@ -74,6 +74,11 @@ onMounted(() => {
     img {
         width: 150px;
         filter: contrast(0) brightness(0%);
+        transition: 150ms linear filter;
+    }
+
+    img.correct {
+        filter: unset;
     }
 
     .volume-icon {
