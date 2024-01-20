@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-expect-error
 import * as P from 'pokeapi-js-wrapper';
 import { Ref, computed, onMounted, ref, watchEffect } from 'vue';
 
