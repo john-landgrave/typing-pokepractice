@@ -27,7 +27,7 @@ const next = () => {
   <Suspense>
     <div>
       <Pokemon class="mb-10" :key="pokemonNumber" :no="pokemonNumber" @done="checkAnswer" @next="next"></Pokemon>
-      <div class="flex flex-row justify-center w-[500px]">
+      <div class="flex flex-row justify-center">
         <button :disabled="!isCorrect" type="button" @click="next">Next</button>
       </div>
     </div>
